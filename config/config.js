@@ -11,4 +11,11 @@ module.exports = {
     secretKey: "abcdefg",
     expiresIn: 60 * 60 * 24 * 30,
   },
+  wx: {
+    appId: process.env.appId,
+    appSecret: process.env.appSecret,
+    loginUrl: "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
+    // 微信小程序官方文档：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+    // 本地测试：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+  },
 };

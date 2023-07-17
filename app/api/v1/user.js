@@ -1,6 +1,6 @@
 const Router = require("koa-router");
 
-const { User } = require("../../../models/user");
+const { User } = require("../../models/user");
 const { RegisterValidator } = require("../../validators/validator");
 
 const router = new Router({

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { Sequelize, Model } = require("sequelize");
-const { sequelize } = require("../core/db");
+const { sequelize } = require("../../core/db");
 
 class User extends Model {
   static async verifyEmailPassword(email, plainPassword) {
@@ -15,6 +15,17 @@ class User extends Model {
       throw new global.errs.AuthFailed("密码不正确");
     }
     return user;
+  }
+
+  static async getUserByOpenid(openid) {
+    const user = await User.findOne({
+      where: { openid },
+    });
+    return user;
+  }
+
+  static async registerByOpenid(openid) {
+    return await User.create({ openid });
   }
 }
 

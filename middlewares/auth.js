@@ -2,7 +2,12 @@ const jwt = require("jsonwebtoken");
 const basicAuth = require("basic-auth");
 
 class Auth {
-  constructor() {}
+  constructor(level) {
+    this.level = level || 1;
+    Auth.USER = 8;
+    Auth.ADMIN = 16;
+    Auth.SUPER_ADMIN = 32;
+  }
 
   get m() {
     return async (ctx, next) => {
@@ -17,10 +22,16 @@ class Auth {
           userToken.name,
           global.config.security.secretKey
         );
+
         ctx.auth = {
           uid: decode.uid,
           scope: decode.scope,
         };
+
+        if (decode.scope < this.level) {
+          errMsg = "权限不足";
+          throw new global.errs.Forbidden(errMsg);
+        }
       } catch (error) {
         if (error.name === "TokenExpiredError") {
           errMsg = "token已过期";
@@ -31,6 +42,15 @@ class Auth {
 
       await next();
     };
+  }
+
+  static verifyToken(token) {
+    try {
+      jwt.verify(token, global.config.security.secretKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
 

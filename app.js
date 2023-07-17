@@ -3,7 +3,7 @@ const { bodyParser } = require("@koa/bodyparser");
 const InitManager = require('./core/init');
 const catchError = require('./middlewares/exception');
 
-require('./models/user');
+require("dotenv").config();
 
 const app = new Koa();
 app.use(bodyParser());
