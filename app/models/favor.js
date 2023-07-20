@@ -59,6 +59,31 @@ class Favor extends Model {
       await art.decrement("fav_nums", { by: 1, transaction: t });
     });
   }
+
+  static async userLikeIt(art_id, type, uid) {
+    return await Favor.findOne({
+      where: {
+        uid,
+        art_id,
+        type,
+      },
+    });
+  }
+
+  static async getMyClassicFavors(uid) {
+    const arts = await Favor.findAll({
+      where: {
+        uid,
+        type: {
+          [Sequelize.Op.not]: 400,
+        },
+      },
+    });
+    if (!arts) {
+      throw new global.errs.NotFound();
+    }
+    return await Art.getList(arts);
+  }
 }
 
 Favor.init(

@@ -18,4 +18,8 @@ module.exports = {
     // 微信小程序官方文档：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
     // 本地测试：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
   },
+  yushu: {
+    detailUrl: "http://t.yushu.im/v2/book/id/%s",
+    keywordUrl: "http://t.yushu.im/v2/book/search?q=%s&count=%s&start=%s&summary=%s",
+  },
 };
