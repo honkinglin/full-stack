@@ -38,7 +38,7 @@ Model.prototype.toJSON = function () {
     }
   }
 
-  if (isArray(this.exclude)) {
+  if (Array.isArray(this.exclude)) {
     this.exclude.forEach((value) => {
       unset(data, value);
     });
