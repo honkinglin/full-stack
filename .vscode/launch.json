@@ -4,8 +4,8 @@
     {
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "name": "nodemon",
-      "program": "${workspaceFolder}/app.js",
+      "name": "island",
+      "program": "${workspaceFolder}/island/app.js",
       "request": "launch",
       "restart": true,
       "runtimeExecutable": "nodemon",

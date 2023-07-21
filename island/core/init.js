@@ -10,7 +10,7 @@ class InitManager {
   }
 
   static initLoadRouters() {
-    requireDirectory(module, `${process.cwd()}/app/api`, { visit: whenLoadModule });
+    requireDirectory(module, `${process.cwd()}/island/app/api`, { visit: whenLoadModule });
 
     function whenLoadModule(obj) {
       if (obj instanceof Router) {
@@ -25,7 +25,7 @@ class InitManager {
   }
 
   static loadConfig(path = "") {
-    const configPath = path || process.cwd() + "/config/config.js";
+    const configPath = path || process.cwd() + "/island/config/config.js";
     const config = require(configPath);
     global.config = config;
   }
