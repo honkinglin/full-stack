@@ -25,6 +25,13 @@ class Art {
         art = await Sentence.findOne(finder);
         break;
       case 400:
+        const { Book } = require("./book");
+        art = await Book.findOne(finder);
+        if (!art) {
+          art = await Book.create({
+            id: art_id,
+          });
+        }
         break;
       default:
         break;
@@ -65,13 +72,13 @@ class Art {
     // const scope = "bh";
     switch (type) {
       case 100:
-        arts = await Movie.findOne(finder);
+        arts = await Movie.findAll(finder);
         break;
       case 200:
-        arts = await Music.findOne(finder);
+        arts = await Music.findAll(finder);
         break;
       case 300:
-        arts = await Sentence.findOne(finder);
+        arts = await Sentence.findAll(finder);
         break;
       case 400:
         break;
