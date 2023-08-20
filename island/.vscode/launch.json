@@ -4,14 +4,12 @@
     {
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "name": "island",
-      "program": "${workspaceFolder}/island/app.js",
+      "name": "Island",
+      "program": "${workspaceFolder}/app.js",
       "request": "launch",
       "restart": true,
       "runtimeExecutable": "nodemon",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "type": "node"
     }
   ]

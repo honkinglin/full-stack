@@ -1,0 +1,11 @@
+*.log
+.env
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db
+/.idea
+/vendor
+/.settings
+/.buildpath
+/.project
