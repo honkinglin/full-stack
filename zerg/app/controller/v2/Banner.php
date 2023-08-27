@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controller\v1;
+namespace app\controller\v2;
 
 use app\exception\BannerMissException;
 use think\Validate;
@@ -20,12 +20,6 @@ class Banner extends Validate
   public function getBanner($id)
   {
 
-    (new IDMustBePositiveInt())->goCheck();
-
-    $banner = BannerModel::getBannerByID($id);
-    if (!$banner) {
-      throw new BannerMissException();
-    }
-    return json($banner, 200);
+    return 'this is v2 version';
   }
 }

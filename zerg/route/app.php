@@ -10,7 +10,13 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('banner/:id', 'v1.Banner/getBanner');
+Route::get('api/:version/banner/:id', ':version.Banner/getBanner');
+
+Route::get('api/:version/theme', ':version.Theme/getSimpleList');
+
+Route::get('api/:version/theme/:id', ':version.Theme/getComplexOne');
+
+Route::get('api/:version/product/recent', ':version.Product/getRecent');
 
 // Route::get('banner/:id', 'banner/getBanner');
 
