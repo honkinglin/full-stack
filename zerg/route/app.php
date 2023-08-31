@@ -18,6 +18,8 @@ Route::get('api/:version/theme/:id', ':version.Theme/getComplexOne');
 
 Route::get('api/:version/product/recent', ':version.Product/getRecent');
 
+Route::get('api/:version/category/all', ':version.Category/getAllCategories');
+
 // Route::get('banner/:id', 'banner/getBanner');
 
 // Route::get('think', function () {

@@ -13,10 +13,10 @@ class Product extends Validate
   {
     (new Count())->goCheck();
 
-    $recent = ProductModel::getMostRecent($count);
-    if (!$recent) {
+    $products = ProductModel::getMostRecent($count);
+    if ($products->isEmpty()) {
       throw new ProductException();
     }
-    return json($recent, 200);
+    return json($products, 200);
   }
 }
