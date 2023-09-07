@@ -23,3 +23,5 @@ Route::get('api/:version/product/:id', ':version.Product/getOne');
 Route::get('api/:version/category/all', ':version.Category/getAllCategories');
 
 Route::post('api/:version/token/user', ':version.Token/getToken');
+
+Route::post('api/:version/address', ':version.Address/createOrUpdateAddress');
