@@ -7,7 +7,7 @@ use app\enum\ScopeEnum;
 use app\exception\ForbiddenException;
 use app\exception\TokenException;
 
-class NeedExclusiveScope
+class CheckExclusiveScope
 {
   public function handle($request, \Closure $next)
   {

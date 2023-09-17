@@ -5,6 +5,7 @@ namespace app\service;
 use app\exception\TokenException;
 use think\facade\Request;
 use think\facade\Cache;
+use think\Exception;
 
 class Token
 {
@@ -52,5 +53,17 @@ class Token
   {
     $uid = self::getCurrentTokenVar('uid');
     return $uid;
+  }
+
+  public static function isValidOperate($checkedUID)
+  {
+    if (!$checkedUID) {
+      throw new Exception('检查UID时必须传入一个被检查的UID');
+    }
+    $currentOperateUID = self::getCurrentUid();
+    if ($currentOperateUID == $checkedUID) {
+      return true;
+    }
+    return false;
   }
 }

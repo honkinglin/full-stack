@@ -23,7 +23,8 @@
         "php": ">=8.0.0",
         "topthink/framework": "^8.0",
         "topthink/think-orm": "^3.0",
-        "topthink/think-filesystem": "^2.0"
+        "topthink/think-filesystem": "^2.0",
+        "wechatpay/wechatpay": "^1.4"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
@@ -35,7 +36,14 @@
         },
         "psr-0": {
             "": "extend/"
-        }
+        },
+        "files": [
+            "app/extend/WxPay/WxPay.Api.php",
+            "app/extend/WxPay/WxPay.Config.php",
+            "app/extend/WxPay/WxPay.Data.php",
+            "app/extend/WxPay/WxPay.Exception.php",
+            "app/extend/WxPay/WxPay.Notify.php"
+        ]
     },
     "config": {
         "preferred-install": "dist"

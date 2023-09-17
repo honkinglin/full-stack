@@ -110,5 +110,14 @@ class UserToken
     }
     return $key;
   }
-  
+
+  public static function verifyToken($token)
+  {
+    $exist = cache($token);
+    if ($exist) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
