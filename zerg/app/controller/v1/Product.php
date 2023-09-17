@@ -40,4 +40,9 @@ class Product extends Validate
     }
     return json($product, 200);
   }
+
+  public function deleteOne($id)
+  {
+    
+  }
 }

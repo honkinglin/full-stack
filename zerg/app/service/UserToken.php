@@ -2,6 +2,7 @@
 
 namespace app\service;
 
+use app\enum\ScopeEnum;
 use think\facade\Config;
 use think\Exception;
 use app\service\Token as TokenService;
@@ -88,9 +89,9 @@ class UserToken
     $cachedValue = $wxResult;
     $cachedValue['uid'] = $uid;
     // scope = 16 代表App用户的权限数值
-    $cachedValue['scope'] = 16;
+    $cachedValue['scope'] = ScopeEnum::User;
     // scope = 32 代表CMS（管理员）用户的权限数值
-    // $cachedValue['scope'] = 32;
+    // $cachedValue['scope'] = ScopeEnum::Super;
     return $cachedValue;
   }
 

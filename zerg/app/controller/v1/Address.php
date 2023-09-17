@@ -2,14 +2,13 @@
 
 namespace app\controller\v1;
 
-use think\Validate;
 use app\validate\AddressNew;
 use app\service\Token as TokenService;
 use app\model\User;
 use app\exception\UserException;
 use app\exception\SuccessMessage;
 
-class Address extends Validate
+class Address
 {
   public function createOrUpdateAddress()
   {
