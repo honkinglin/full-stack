@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'message.apps.MessageConfig'
+    'apps.users.apps.UsersConfig'
 ]
+
+AUTH_USER_MODEL = 'users.UserProfile'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,7 +79,7 @@ WSGI_APPLICATION = 'OnlineEducation.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'online-education',
+        'NAME': 'OnlineEducation',
         'USER': 'root',
         'PASSWORD': '1234qwer',
         'HOST': '127.0.0.1',
