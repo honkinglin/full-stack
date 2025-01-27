@@ -9,3 +9,9 @@
 - Servlet 6.x
 - Vue 3.x
 - Element Plus 2.x
+
+### Usage
+
+```
+docker-compose up -d
+```
