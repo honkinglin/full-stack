@@ -2,15 +2,17 @@
 > 🚀 Becoming a full stack developer
 
 ## Node
-- simple koa project -- [island](./island/README.md)
+- koa project -- [island](./island/README.md)
 - nodejs api design -- [Nodejs-Api](./nodejs-course/README.md)
 
 ## PHP
-- simple thinkphp project -- [zerg](./zerg/README.md)
+- thinkphp project -- [zerg](./zerg/README.md)
 
 ## Python
-
-## Go
+- Flask + Jinja2 + Mysql project -- [fisher](./fisher/README.md)
+- Django5 + Jinja2 project + Mysql -- [OnlineEducation](./OnlineEducation/README.md)
 
 ## Java
 - Servlet + Mysql + Mybatis + Vue3 project - [OA](./oa/)
+
+## Go

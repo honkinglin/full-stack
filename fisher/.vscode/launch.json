@@ -1,0 +1,20 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Flask",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/run.py", // 替换为你的 Flask 入口文件路径
+      "args": ["run", "--no-debugger", "--no-reload"], // Flask 启动参数
+      "env": {
+        "FLASK_APP": "app.py", // 指定 Flask 入口文件
+        "FLASK_ENV": "development" // 启用开发模式（热加载）
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}
