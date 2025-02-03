@@ -1,6 +1,6 @@
 # OA Project
 
-### technology stack
+### Technology stack
 
 - Java 23
 - Mybatis 3.x
