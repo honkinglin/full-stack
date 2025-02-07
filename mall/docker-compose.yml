@@ -1,0 +1,52 @@
+services:
+  # Redis 服务
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6369:6369"
+    networks:
+      - mall_network
+
+  # MySQL 服务
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: mall
+    restart: always
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - mall_network
+
+  # Spring Boot 应用（直接运行本地构建的 JAR 包）
+  app:
+    image: openjdk:21-jdk-slim
+    container_name: mall
+    working_dir: /app
+    volumes:
+      - ./upload:/app/upload
+      - ./target/app.jar:/app/app.jar  # 挂载本地 JAR 文件
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mall
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_PROFILES_ACTIVE: prod
+    command: ["sh", "-c", "mkdir -p /app/upload && chmod -R 777 /app/upload && java -jar /app/app.jar"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - mall_network
+
+networks:
+  mall_network:
+    driver: bridge

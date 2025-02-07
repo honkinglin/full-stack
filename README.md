@@ -13,7 +13,8 @@
 - Django5 + Jinja2 project + Mysql -- [OnlineEducation](./OnlineEducation/README.md)
 
 ## Java
-- Servlet + Mysql + Mybatis + Vue3 project - [OA](./OA/)
-- Spring MVC + Mysql + Mybatis + Vue3 project - [Reader](./Reader/)
+- Servlet + Mysql + Mybatis + Vue3 project - [OA](./oa/README.md)
+- Spring MVC + Mysql + Mybatis + Vue3 project - [Reader](./reader/README.md)
+- Spring Boot3.x + Mysql + Mybatis + Redis + Vue3 project - [Mall](./mall/README.md)
 
 ## Go

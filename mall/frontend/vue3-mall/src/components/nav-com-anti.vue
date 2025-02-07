@@ -1,0 +1,50 @@
+<template>
+  <div :style="{ backgroundColor: '#ffffff',marginBottom:'20px',marginTop:'20px',justifyContent:'space-between', display:'flex' }">
+    <div class="search-wrapper">
+      <el-input class="input-search" v-model="name" placeholder="请输入商品名称"></el-input>
+      <i class="el-icon-search" @click="locationFn"></i>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      name: "",
+    };
+  },
+  created() {},
+  mounted() {},
+  methods: {
+    locationFn2(url) {
+      this.$router.push(url);
+    },
+    locationFn() {
+      this.$router.push("/search?keyword=" + this.name);
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.search-wrapper{
+  display: flex;
+  align-items: center;
+  width:100%;
+  justify-content: flex-end;
+  .el-icon-search{
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+}
+.input-search{
+  width: 300px;
+}
+.logo{
+  max-width: 200px;
+  cursor: pointer;
+}
+</style>
