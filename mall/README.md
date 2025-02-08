@@ -31,4 +31,4 @@ pnpm install
 pnpm build
 ```
 
-![map](./docs/markmap.svg)
+![map](./docs/markmap.png)
