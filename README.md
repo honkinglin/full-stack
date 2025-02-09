@@ -16,5 +16,6 @@
 - Servlet + Mysql + Mybatis + Vue3 project - [OA](./oa/README.md)
 - Spring MVC + Mysql + Mybatis + Vue3 project - [Reader](./reader/README.md)
 - Spring Boot3.x + Mysql + Mybatis + Redis + Vue3 project - [Mall](./mall/README.md)
+- Spring cloud 2024.x + Mysql + Mybatis - [Course-Practice](./spring-cloud-course-practice/README.md)
 
 ## Go
