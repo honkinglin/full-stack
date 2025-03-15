@@ -1,11 +1,8 @@
 ﻿using eTickets.Data;
-using eTickets.Data.Base;
+using Microsoft.AspNetCore.Http; // 需要引入这个命名空间以使用 IFormFile
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eTickets.Models
 {
@@ -25,9 +22,8 @@ namespace eTickets.Models
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
 
-        [Display(Name = "Movie poster URL")]
-        [Required(ErrorMessage = "Movie poster URL is required")]
-        public string ImageURL { get; set; }
+        [Display(Name = "Movie poster")]
+        public IFormFile ImageFile { get; set; } // 替换 ImageURL 为 IFormFile
 
         [Display(Name = "Movie start date")]
         [Required(ErrorMessage = "Start date is required")]
@@ -41,7 +37,7 @@ namespace eTickets.Models
         [Required(ErrorMessage = "Movie category is required")]
         public MovieCategory MovieCategory { get; set; }
 
-        //Relationships
+        // Relationships
         [Display(Name = "Select actor(s)")]
         [Required(ErrorMessage = "Movie actor(s) is required")]
         public List<int> ActorIds { get; set; }
