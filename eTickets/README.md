@@ -10,14 +10,14 @@ dotnet run
 
 - Admin  
 ```
-admin@etickets.com  
-Coding@1234?  
+admin@test.com  
+Test123?  
 ```
 
 - User  
 ```
-user@etickets.com  
-Coding@1234?  
+user@test.com  
+Test123?  
 ```
 
 ## Initialized
