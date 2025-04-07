@@ -36,13 +36,13 @@ namespace eTickets.Controllers
         // GET: Cinemas/Create
         public IActionResult Create()
         {
-            return View(new CinemaViewModel());
+            return View(new CinemaVM());
         }
 
         // POST: Cinemas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CinemaViewModel cinema)
+        public async Task<IActionResult> Create(CinemaVM cinema)
         {
             // Validate image file
             if (cinema.LogoFile == null || cinema.LogoFile.Length == 0)
@@ -109,7 +109,7 @@ namespace eTickets.Controllers
             var cinemaDetails = await _service.GetByIdAsync(id);
             if (cinemaDetails == null) return View("NotFound");
 
-            var response = new CinemaViewModel
+            var response = new CinemaVM
             {
                 Id = cinemaDetails.Id,
                 Name = cinemaDetails.Name,
@@ -124,7 +124,7 @@ namespace eTickets.Controllers
         // POST: Cinemas/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CinemaViewModel cinema)
+        public async Task<IActionResult> Edit(int id, CinemaVM cinema)
         {
             if (id != cinema.Id) return View("NotFound");
 

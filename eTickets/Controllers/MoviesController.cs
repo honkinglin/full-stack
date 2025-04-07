@@ -73,7 +73,7 @@ namespace eTickets.Controllers
         public async Task<IActionResult> Create(NewMovieVM movie)
         {
 
-            // 在创建时手动检查 ImageFile 是否为空
+            // check if the image file is null or empty
             if (movie.ImageFile == null || movie.ImageFile.Length == 0)
             {
                 ModelState.AddModelError("ImageFile", "Movie poster is required");
@@ -88,7 +88,7 @@ namespace eTickets.Controllers
                 return View(movie);
             }
 
-            // 处理文件上传
+            // process the uploaded image
             string imageUrl = null;
             if (movie.ImageFile != null && movie.ImageFile.Length > 0)
             {
@@ -109,7 +109,7 @@ namespace eTickets.Controllers
                 imageUrl = "/images/movies/" + uniqueFileName;
             }
 
-            // 调用服务层保存电影
+            // call the service to add the new movie
             await _service.AddNewMovieAsync(movie, imageUrl);
             return RedirectToAction(nameof(Index));
         }
@@ -138,7 +138,7 @@ namespace eTickets.Controllers
             ViewBag.Cinemas = new SelectList(movieDropdownsData.Cinemas, "Id", "Name");
             ViewBag.Producers = new SelectList(movieDropdownsData.Producers, "Id", "FullName");
             ViewBag.Actors = new SelectList(movieDropdownsData.Actors, "Id", "FullName");
-            ViewBag.CurrentImage = movieDetails.ImageURL; // 传递当前图片路径给视图
+            ViewBag.CurrentImage = movieDetails.ImageURL; // pass the current image URL to the view
 
             return View(response);
         }
@@ -160,10 +160,10 @@ namespace eTickets.Controllers
                 return View(movie);
             }
 
-            // 获取当前电影的图片路径
+            // get the current image URL from the database
             string imageUrl = (await _service.GetMovieByIdAsync(id)).ImageURL;
 
-            // 如果上传了新的图片，更新图片路径
+            // if uploaded a new image, update the image path
             if (movie.ImageFile != null && movie.ImageFile.Length > 0)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/movies");
@@ -180,10 +180,10 @@ namespace eTickets.Controllers
                     await movie.ImageFile.CopyToAsync(fileStream);
                 }
 
-                imageUrl = "/images/movies/" + uniqueFileName; // 更新图片路径
+                imageUrl = "/images/movies/" + uniqueFileName; // update the image URL
             }
 
-            // 调用服务层更新电影信息，包括更新图片地址
+            // call the service to update the movie
             await _service.UpdateMovieAsync(movie, imageUrl);
             return RedirectToAction(nameof(Index));
         }

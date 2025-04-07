@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eTickets.Models
 {
-  public class ProducerViewModel
+  public class ProducerVM
   {
     public int Id { get; set; }
 

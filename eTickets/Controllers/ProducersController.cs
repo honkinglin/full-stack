@@ -45,13 +45,13 @@ namespace eTickets.Controllers
         // GET: producers/create
         public IActionResult Create()
         {
-            return View(new ProducerViewModel());
+            return View(new ProducerVM());
         }
 
         // POST: producers/create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProducerViewModel producer)
+        public async Task<IActionResult> Create(ProducerVM producer)
         {
             // Validate image file
             if (producer.ProfilePictureFile == null || producer.ProfilePictureFile.Length == 0)
@@ -116,7 +116,7 @@ namespace eTickets.Controllers
             var producerDetails = await _service.GetByIdAsync(id);
             if (producerDetails == null) return View("NotFound");
 
-            var response = new ProducerViewModel
+            var response = new ProducerVM
             {
                 Id = producerDetails.Id,
                 FullName = producerDetails.FullName,
@@ -130,7 +130,7 @@ namespace eTickets.Controllers
         // POST: producers/edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProducerViewModel producer)
+        public async Task<IActionResult> Edit(int id, ProducerVM producer)
         {
             if (id != producer.Id) return View("NotFound");
 

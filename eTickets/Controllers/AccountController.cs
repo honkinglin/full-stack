@@ -99,11 +99,10 @@ namespace eTickets.Controllers
             {
                 _logger.LogInformation("User created successfully for {Email}", registerVM.EmailAddress);
 
-                // 添加角色
+                // add user to role
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
                 _logger.LogInformation("Role {Role} assigned to {Email}", UserRoles.User, registerVM.EmailAddress);
 
-                // 强制保存更改到 SQLite
                 try
                 {
                     await _context.SaveChangesAsync();
@@ -116,7 +115,6 @@ namespace eTickets.Controllers
                     return View(registerVM);
                 }
 
-                // 验证用户是否真的写入数据库
                 var createdUser = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
                 if (createdUser == null)
                 {

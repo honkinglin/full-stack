@@ -36,13 +36,13 @@ namespace eTickets.Controllers
         // GET: Actors/Create
         public IActionResult Create()
         {
-            return View(new ActorViewModel());
+            return View(new ActorVM());
         }
 
         // POST: Actors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ActorViewModel actor)
+        public async Task<IActionResult> Create(ActorVM actor)
         {
             // Validate image file
             if (actor.ProfilePictureFile == null || actor.ProfilePictureFile.Length == 0)
@@ -116,7 +116,7 @@ namespace eTickets.Controllers
             var actorDetails = await _service.GetByIdAsync(id);
             if (actorDetails == null) return View("NotFound");
 
-            var response = new ActorViewModel
+            var response = new ActorVM
             {
                 Id = actorDetails.Id,
                 FullName = actorDetails.FullName,
@@ -130,7 +130,7 @@ namespace eTickets.Controllers
         // POST: Actors/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ActorViewModel actor)
+        public async Task<IActionResult> Edit(int id, ActorVM actor)
         {
             if (id != actor.Id) return View("NotFound");
 

@@ -1,5 +1,5 @@
 ﻿using eTickets.Data;
-using Microsoft.AspNetCore.Http; // 需要引入这个命名空间以使用 IFormFile
+using Microsoft.AspNetCore.Http; 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,7 +23,7 @@ namespace eTickets.Models
         public double Price { get; set; }
 
         [Display(Name = "Movie poster")]
-        public IFormFile ImageFile { get; set; } // 替换 ImageURL 为 IFormFile
+        public IFormFile ImageFile { get; set; } 
 
         [Display(Name = "Movie start date")]
         [Required(ErrorMessage = "Start date is required")]

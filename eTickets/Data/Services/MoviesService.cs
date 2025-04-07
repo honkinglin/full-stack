@@ -114,7 +114,7 @@ namespace eTickets.Data.Services
 
             if (movie == null) return;
 
-            // 删除本地图片文件（可选）
+            // delete the image file from the server
             if (!string.IsNullOrEmpty(movie.ImageURL))
             {
                 string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, movie.ImageURL.TrimStart('/'));
@@ -124,10 +124,10 @@ namespace eTickets.Data.Services
                 }
             }
 
-            // 删除关联的演员记录
+            // delete the associated actor-movie records
             _context.Actors_Movies.RemoveRange(movie.Actors_Movies);
 
-            // 删除电影记录
+            // delete the movie record
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
         }
