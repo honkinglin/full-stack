@@ -2,8 +2,6 @@
 using eTickets.Data.ViewModels;
 using eTickets.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
