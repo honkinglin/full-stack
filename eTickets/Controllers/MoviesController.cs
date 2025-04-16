@@ -16,7 +16,7 @@ namespace eTickets.Controllers
     public class MoviesController : Controller
     {
         private readonly IMoviesService _service;
-        private readonly IWebHostEnvironment _webHostEnvironment; // 添加 IWebHostEnvironment
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public MoviesController(IMoviesService service, IWebHostEnvironment webHostEnvironment)
         {
@@ -25,24 +25,49 @@ namespace eTickets.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 6)
         {
             var allMovies = await _service.GetAllAsync(n => n.Cinema);
-            return View(allMovies);
+            var totalMovies = allMovies.Count();
+            var totalPages = (int)Math.Ceiling((double)totalMovies / pageSize);
+
+            var paginatedMovies = allMovies
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = pageSize;
+
+            return View(paginatedMovies);
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Filter(string searchString)
+        public async Task<IActionResult> Filter(string searchString, int page = 1, int pageSize = 6)
         {
             var allMovies = await _service.GetAllAsync(n => n.Cinema);
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                var filteredResultNew = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) || string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                return View("Index", filteredResultNew);
+                allMovies = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) || 
+                                                 string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
 
-            return View("Index", allMovies);
+            var totalMovies = allMovies.Count();
+            var totalPages = (int)Math.Ceiling((double)totalMovies / pageSize);
+
+            var paginatedMovies = allMovies
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = pageSize;
+            ViewBag.SearchString = searchString;
+
+            return View("Index", paginatedMovies);
         }
 
         [AllowAnonymous]
@@ -52,7 +77,6 @@ namespace eTickets.Controllers
             return View(movieDetail);
         }
 
-        // GET: Movies/Create
         public async Task<IActionResult> Create()
         {
             var movieDropdownsData = await _service.GetNewMovieDropdownsValues();
@@ -64,13 +88,10 @@ namespace eTickets.Controllers
             return View();
         }
 
-        // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(NewMovieVM movie)
         {
-
-            // check if the image file is null or empty
             if (movie.ImageFile == null || movie.ImageFile.Length == 0)
             {
                 ModelState.AddModelError("ImageFile", "Movie poster is required");
@@ -85,7 +106,6 @@ namespace eTickets.Controllers
                 return View(movie);
             }
 
-            // process the uploaded image
             string imageUrl = null;
             if (movie.ImageFile != null && movie.ImageFile.Length > 0)
             {
@@ -106,12 +126,10 @@ namespace eTickets.Controllers
                 imageUrl = "/images/movies/" + uniqueFileName;
             }
 
-            // call the service to add the new movie
             await _service.AddNewMovieAsync(movie, imageUrl);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Movies/Edit/1
         public async Task<IActionResult> Edit(int id)
         {
             var movieDetails = await _service.GetMovieByIdAsync(id);
@@ -135,13 +153,11 @@ namespace eTickets.Controllers
             ViewBag.Cinemas = new SelectList(movieDropdownsData.Cinemas, "Id", "Name");
             ViewBag.Producers = new SelectList(movieDropdownsData.Producers, "Id", "FullName");
             ViewBag.Actors = new SelectList(movieDropdownsData.Actors, "Id", "FullName");
-            ViewBag.CurrentImage = movieDetails.ImageURL; // pass the current image URL to the view
+            ViewBag.CurrentImage = movieDetails.ImageURL;
 
             return View(response);
         }
 
-
-        // POST: Movies/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, NewMovieVM movie)
@@ -157,10 +173,8 @@ namespace eTickets.Controllers
                 return View(movie);
             }
 
-            // get the current image URL from the database
             string imageUrl = (await _service.GetMovieByIdAsync(id)).ImageURL;
 
-            // if uploaded a new image, update the image path
             if (movie.ImageFile != null && movie.ImageFile.Length > 0)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/movies");
@@ -177,16 +191,13 @@ namespace eTickets.Controllers
                     await movie.ImageFile.CopyToAsync(fileStream);
                 }
 
-                imageUrl = "/images/movies/" + uniqueFileName; // update the image URL
+                imageUrl = "/images/movies/" + uniqueFileName;
             }
 
-            // call the service to update the movie
             await _service.UpdateMovieAsync(movie, imageUrl);
             return RedirectToAction(nameof(Index));
         }
 
-
-        // GET: Movies/Delete/1
         [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
@@ -195,7 +206,6 @@ namespace eTickets.Controllers
             return View(movieDetails);
         }
 
-        // POST: Movies/Delete/1
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = UserRoles.Admin)]
