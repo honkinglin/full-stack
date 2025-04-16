@@ -43,7 +43,7 @@ namespace eTickets.Controllers
             if (!ModelState.IsValid) return View(loginVM);
 
             var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);
-            if(user != null)
+            if (user != null)
             {
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
                 if (passwordCheck)
@@ -65,7 +65,7 @@ namespace eTickets.Controllers
 
         public IActionResult Register() => View(new RegisterVM());
 
-[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             _logger.LogInformation("Starting registration for {Email}", registerVM.EmailAddress);

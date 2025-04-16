@@ -50,7 +50,7 @@ namespace eTickets.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                allMovies = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) || 
+                allMovies = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) ||
                                                  string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
 
