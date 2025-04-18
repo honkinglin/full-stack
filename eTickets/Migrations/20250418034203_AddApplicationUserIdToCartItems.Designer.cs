@@ -11,7 +11,7 @@ using eTickets.Data;
 namespace eTickets.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250418005930_AddApplicationUserIdToCartItems")]
+    [Migration("20250418034203_AddApplicationUserIdToCartItems")]
     partial class AddApplicationUserIdToCartItems
     {
         /// <inheritdoc />

@@ -1,50 +1,52 @@
-﻿@model List<Order>
+﻿@model List<Order> // The view expects a model of type List<Order>, representing a list of orders.
 
 @{ 
-    ViewData["Title"] = "All orders";
+    ViewData["Title"] = "All orders"; // Sets the title of the page to "All orders".
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>List of all your orders</h4>
+            <h4>List of all your orders</h4> <!-- Displays a heading for the orders list. -->
         </p>
 
-        <table class="table">
+        <table class="table"> <!-- Creates a table to display the orders. -->
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Items</th>
-                    <th>Total</th>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    <th>Order ID</th> <!-- Column for the order ID. -->
+                    <th>Items</th> <!-- Column for the items in the order. -->
+                    <th>Total</th> <!-- Column for the total price of the order. -->
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) // Checks if the user is authenticated and has the "Admin" role.
                     {
-                        <th>User</th>
+                        <th>User</th> <!-- Column for the user who placed the order (visible only to admins). -->
                     }
                 </tr>
             </thead>
             <tbody>
-                @foreach (var order in Model)
+                @foreach (var order in Model) // Loops through each order in the model.
                 {
                 <tr>
-                    <td class="align-middle">@order.Id</td>
+                    <td class="align-middle">@order.Id</td> <!-- Displays the order ID. -->
                     <td class="align-middle">
-                        <ul style="list-style-type:none">
-                            @foreach (var item in order.OrderItems)
+                        <ul style="list-style-type:none"> <!-- Creates a list of items in the order. -->
+                            @foreach (var item in order.OrderItems) // Loops through each item in the order.
                             {
                                 <li>
-                                    <div class="alert alert-info" role="alert">
-                                        <span class="badge bg-success">@item.Amount</span> [@item.Price.ToString("c")] - @item.Movie.Name
+                                    <div class="alert alert-info" role="alert"> <!-- Displays each item in a styled alert box. -->
+                                        <span class="badge bg-success">@item.Amount</span> <!-- Displays the quantity of the item. -->
+                                        [@item.Price.ToString("c")] <!-- Displays the price of the item, formatted as currency. -->
+                                        - @item.Movie.Name <!-- Displays the name of the movie. -->
                                     </div>
                                 </li>
                             }
                         </ul>
                     </td>
                     <td class="align-middle">
-                        @order.OrderItems.Select(m => m.Movie.Price * m.Amount).Sum().ToString("c")
+                        @order.OrderItems.Select(m => m.Movie.Price * m.Amount).Sum().ToString("c") <!-- Calculates and displays the total price of the order, formatted as currency. -->
                     </td>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) // Checks if the user is authenticated and has the "Admin" role.
                     {
-                        <td class="align-middle"> @order.User.FullName </td>
+                        <td class="align-middle"> @order.User.FullName </td> <!-- Displays the full name of the user who placed the order (visible only to admins). -->
                     }
                     </tr>
                 }
