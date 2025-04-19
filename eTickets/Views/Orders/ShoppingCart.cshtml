@@ -1,43 +1,45 @@
-﻿@using eTickets.Data.ViewModels;
-@model ShoppingCartVM
+﻿@using eTickets.Data.ViewModels; 
+@model ShoppingCartVM // The view expects a model of type ShoppingCartVM, representing the shopping cart data.
 
 @{
-    ViewData["Title"] = "Shopping cart summary";
+    ViewData["Title"] = "Shopping cart summary"; // Sets the title of the page to "Shopping cart summary".
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <div class="text-center">
-            <h2>You shopping cart summary</h2>
+            <h2>Your shopping cart summary</h2> <!-- Displays the heading for the shopping cart page. -->
         </div>
 
-        <table class="table">
+        <table class="table"> <!-- Creates a table to display the shopping cart items. -->
             <thead>
                 <tr>
-                    <th>Selected amount</th>
-                    <th>Movie</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
-                    <th></th>
+                    <th>Selected amount</th> <!-- Column for the quantity of each item. -->
+                    <th>Movie</th> <!-- Column for the movie name. -->
+                    <th>Price</th> <!-- Column for the price of each movie. -->
+                    <th>Subtotal</th> <!-- Column for the subtotal (quantity * price). -->
+                    <th></th> <!-- Empty column for action buttons (add/remove items). -->
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                @foreach (var item in Model.ShoppingCart.ShoppingCartItems) // Loops through each item in the shopping cart.
                 {
                     <tr>
-                        <td class="align-middle">@item.Amount</td>
-                        <td class="align-middle">@item.Movie.Name</td>
-                        <td class="align-middle">@item.Movie.Price.ToString("c")</td>
-                        <td class="align-middle">@((item.Amount*item.Movie.Price).ToString("c"))</td>
+                        <td class="align-middle">@item.Amount</td> <!-- Displays the quantity of the item. -->
+                        <td class="align-middle">@item.Movie.Name</td> <!-- Displays the name of the movie. -->
+                        <td class="align-middle">@item.Movie.Price.ToString("c")</td> <!-- Displays the price of the movie, formatted as currency. -->
+                        <td class="align-middle">@((item.Amount * item.Movie.Price).ToString("c"))</td> <!-- Calculates and displays the subtotal for the item, formatted as currency. -->
                         <td class="align-middle">
+                            <!-- Link to remove one unit of the item from the shopping cart. -->
                             <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart"
                                asp-route-id="@item.Movie.Id">
-                                <i class="bi bi-cart-dash"></i>
+                                <i class="bi bi-cart-dash"></i> <!-- Icon for removing an item. -->
                             </a>
                             |
+                            <!-- Link to add one unit of the item to the shopping cart. -->
                             <a class="text-success" asp-controller="Orders" asp-action="AddItemToShoppingCart"
                                asp-route-id="@item.Movie.Id">
-                                <i class="bi bi-cart-plus"></i>
+                                <i class="bi bi-cart-plus"></i> <!-- Icon for adding an item. -->
                             </a>
                         </td>
                     </tr>
@@ -45,31 +47,34 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2"></td>
-                    <td><b>Total:</b></td>
+                    <td colspan="2"></td> <!-- Empty cells for alignment. -->
+                    <td><b>Total:</b></td> <!-- Displays the "Total" label. -->
                     <td>
-                        @Model.ShoppingCartTotal.ToString("c")
+                        @Model.ShoppingCartTotal.ToString("c") <!-- Displays the total price of all items in the cart, formatted as currency. -->
                     </td>
-                    <td></td>
+                    <td></td> <!-- Empty cell for alignment. -->
                 </tr>
             </tfoot>
         </table>
 
-        <div class="text-right">
+        <div class="text-right"> <!-- Aligns the buttons to the right. -->
             <div class="btn-group">
-                @if (Model.ShoppingCart.ShoppingCartItems.Any())
+                @if (Model.ShoppingCart.ShoppingCartItems.Any()) // Checks if there are any items in the shopping cart.
                 {
+                    <!-- Button to complete the order if the cart is not empty. -->
                     <a class="btn btn-outline-primary" asp-controller="Orders" asp-action="CompleteOrder">
                         Complete order
                     </a>
                 }
                 else
                 {
+                    <!-- Disabled button if the cart is empty. -->
                     <a class="btn btn-outline-primary disabled" href="#" onclick="return false;">
                         Complete order
                     </a>
                 }
-                <span style="padding:5px"></span>
+                <span style="padding:5px"></span> <!-- Adds spacing between the buttons. -->
+                <!-- Button to navigate back to the movies page to add more items. -->
                 <a class="btn btn-outline-success" asp-controller="Movies" asp-action="Index">
                     Add more items
                 </a>

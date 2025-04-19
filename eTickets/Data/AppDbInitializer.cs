@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.Extensions.Logging;
 namespace eTickets.Data
 {
     public class AppDbInitializer
@@ -143,8 +143,8 @@ namespace eTickets.Data
                     {
                         new Movie()
                         {
-                            Name = "Life",
-                            Description = "This is the Life movie description",
+                            Name = "Companion",
+                            Description = "This is the Companion movie description",
                             Price = 39.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-3.webp",
                             StartDate = DateTime.Now.AddDays(-10),
@@ -155,20 +155,20 @@ namespace eTickets.Data
                         },
                         new Movie()
                         {
-                            Name = "The Shawshank Redemption",
-                            Description = "This is the Shawshank Redemption description",
+                            Name = "Anora",
+                            Description = "This is the Anora description",
                             Price = 29.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-1.webp",
                             StartDate = DateTime.Now,
-                            EndDate = DateTime.Now.AddDays(3),
+                            EndDate = DateTime.Now.AddDays(10),
                             CinemaId = 1,
                             ProducerId = 1,
                             MovieCategory = MovieCategory.Action
                         },
                         new Movie()
                         {
-                            Name = "Ghost",
-                            Description = "This is the Ghost movie description",
+                            Name = "Fight or Flight",
+                            Description = "This is the Fight or Flight movie description",
                             Price = 39.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-4.webp",
                             StartDate = DateTime.Now,
@@ -179,20 +179,20 @@ namespace eTickets.Data
                         },
                         new Movie()
                         {
-                            Name = "Race",
-                            Description = "This is the Race movie description",
+                            Name = "The Substance",
+                            Description = "This is the Substance movie description",
                             Price = 39.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-6.webp",
                             StartDate = DateTime.Now.AddDays(-10),
-                            EndDate = DateTime.Now.AddDays(-5),
+                            EndDate = DateTime.Now.AddDays(5),
                             CinemaId = 1,
                             ProducerId = 2,
                             MovieCategory = MovieCategory.Documentary
                         },
                         new Movie()
                         {
-                            Name = "Scoob",
-                            Description = "This is the Scoob movie description",
+                            Name = "Conclave",
+                            Description = "This is the Conclave movie description",
                             Price = 39.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-7.webp",
                             StartDate = DateTime.Now.AddDays(-10),
@@ -203,8 +203,8 @@ namespace eTickets.Data
                         },
                         new Movie()
                         {
-                            Name = "Cold Soles",
-                            Description = "This is the Cold Soles movie description",
+                            Name = "A Complete Unknown",
+                            Description = "This is the A Complete Unknown movie description",
                             Price = 39.50,
                             ImageURL = "http://localhost:5090/images/movies/movie-8.webp",
                             StartDate = DateTime.Now.AddDays(3),
@@ -320,53 +320,106 @@ namespace eTickets.Data
             }
 
         }
-
+// This method seeds the database with initial roles and users for the application.
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
+            // Create a scoped service provider to resolve dependencies.
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
+                // Retrieve the logger service for logging information and errors.
+                var logger = serviceScope.ServiceProvider.GetService<ILogger<AppDbInitializer>>();
 
-                //Roles
+                // Retrieve the RoleManager service to manage roles in the application.
                 var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+                // Check if the Admin role exists; if not, create it.
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+
+                // Check if the User role exists; if not, create it.
                 if (!await roleManager.RoleExistsAsync(UserRoles.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                //Users
+                // Retrieve the UserManager service to manage users in the application.
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+                // Define the email for the admin user.
                 string adminUserEmail = "admin@test.com";
 
+                // Check if the admin user already exists by email.
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-                if(adminUser == null)
+                if (adminUser == null)
                 {
+                    // Create a new admin user if it does not exist.
                     var newAdminUser = new ApplicationUser()
                     {
-                        FullName = "Admin User",
-                        UserName = "admin-user",
-                        Email = adminUserEmail,
-                        EmailConfirmed = true
+                        FullName = "Admin User", // Admin's full name.
+                        UserName = "admin-user", // Admin's username.
+                        Email = adminUserEmail, // Admin's email.
+                        EmailConfirmed = true  // Mark the email as confirmed.
                     };
+
+                    // Create the admin user with a predefined password.
                     await userManager.CreateAsync(newAdminUser, "Test123?");
+                    // Assign the Admin role to the newly created user.
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
-
+                // Define the email for a regular application user.
                 string appUserEmail = "user@test.com";
 
+                // Check if the regular user already exists by email.
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
+                    // Create a new regular user if it does not exist.
                     var newAppUser = new ApplicationUser()
                     {
-                        FullName = "Application User",
-                        UserName = "app-user",
-                        Email = appUserEmail,
-                        EmailConfirmed = true
+                        FullName = "Application User", // User's full name.
+                        UserName = "app-user",         // User's username.
+                        Email = appUserEmail,          // User's email.
+                        EmailConfirmed = true          // Mark the email as confirmed.
                     };
+
+                    // Create the user with a predefined password.
                     await userManager.CreateAsync(newAppUser, "Test123?");
+                    // Assign the User role to the newly created user.
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
+
+                // Define the email for a second regular application user.
+                string appUserEmail2 = "user2@test.com";
+
+                // Check if the second regular user already exists by email.
+                var appUser2 = await userManager.FindByEmailAsync(appUserEmail2);
+                if (appUser2 == null)
+                {
+                    // Log the creation of the second user.
+                    logger?.LogInformation("Creating app user 2: {Email}", appUserEmail2);
+
+                    // Create a new second regular user if it does not exist.
+                    var newAppUser2 = new ApplicationUser()
+                    {
+                        FullName = "App User2", // User's full name.
+                        UserName = "app-user2", // User's username.
+                        Email = appUserEmail2,  // User's email.
+                        EmailConfirmed = true   // Mark the email as confirmed.
+                    };
+
+                    // Attempt to create the user with a predefined password.
+                    var result = await userManager.CreateAsync(newAppUser2, "Test123!");
+                    if (result.Succeeded)
+                    {
+                        // Assign the User role to the newly created user.
+                        await userManager.AddToRoleAsync(newAppUser2, UserRoles.User);
+                        // Log the successful creation of the user.
+                        logger?.LogInformation("App user 2 created and assigned to User role");
+                    }
+                    else
+                    {
+                        // Log any errors that occurred during user creation.
+                        logger?.LogError("Failed to create app user 2: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
+                    }
                 }
             }
         }

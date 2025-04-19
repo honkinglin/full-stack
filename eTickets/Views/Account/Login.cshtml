@@ -1,42 +1,45 @@
-﻿@using eTickets.Data.ViewModels; 
-@model LoginVM;
-
+﻿@using eTickets.Data.ViewModels;
+@model LoginVM; 
 @{ 
-    ViewData["Title"] = "Log in to your account";
+    ViewData["Title"] = "Log in to your account"; // Sets the title of the page to "Log in to your account".
 }
 
 <div class="row">
-    <div class="col-md-6 offset-3">
+    <div class="col-md-6 offset-3"> <!-- Centers the login form on the page. -->
         <p>
-            <h4>Log in to your account</h4>
+            <h4>Log in to your account</h4> <!-- Displays the heading for the login page. -->
         </p>
 
-        @if(TempData["Error"] != null)
-            {
-                <div class="col-md-12 alert alert-danger">
-                    <span><b>Sorry!</b> - @TempData["Error"] </span>
-                </div>
-            }
+        @if(TempData["Error"] != null) // Checks if there is an error message in TempData.
+        {
+            <div class="col-md-12 alert alert-danger"> <!-- Displays an error message if TempData["Error"] is not null. -->
+                <span><b>Sorry!</b> - @TempData["Error"] </span>
+            </div>
+        }
 
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <form asp-action="Login">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-8 offset-2"> <!-- Centers the login form fields. -->
+                <form asp-action="Login"> <!-- Specifies that the form will post data to the "Login" action in the current controller. -->
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div> <!-- Displays validation errors for the model. -->
 
+                    <!-- Email Address Field -->
                     <div class="form-group">
-                        <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" class="form-control" />
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <label asp-for="EmailAddress" class="control-label"></label> <!-- Label for the email address field. -->
+                        <input asp-for="EmailAddress" class="form-control" /> <!-- Input field for the email address. -->
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span> <!-- Displays validation errors for the email address field. -->
                     </div>
 
+                    <!-- Password Field -->
                     <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Log in" />
-                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                        <label asp-for="Password" class="control-label"></label> <!-- Label for the password field. -->
+                        <input asp-for="Password" class="form-control" /> <!-- Input field for the password. -->
+                        <span asp-validation-for="Password" class="text-danger"></span> <!-- Displays validation errors for the password field. -->
+                    </div>
+
+                    <!-- Submit and Cancel Buttons -->
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Log in" /> <!-- Submit button to log in. -->
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a> <!-- Cancel button to redirect to the Movies page. -->
                     </div>
                 </form>
             </div>
